@@ -4,15 +4,13 @@ import processing.sound.*;
 Serial myPort;
 SoundFile file;
 float mess;
-int height=800;
-int width=800;
+int h=800;
+int w=800;
 int moon=400;
 int count1=0;  
 int count2=0;
 int count5=0;
 
-boolean led1=false;
-boolean led2=false;
 boolean led3=false;
 boolean led4=false;
 boolean led5=false;
@@ -23,7 +21,7 @@ ArrayList<Twinkle> twinkleArrayTwo;
 ArrayList<ShootingStar> starArrayThree;
 
 void setup(){
-  size(height,width);
+  size(800,800);
   file = new SoundFile(this, "moonMusic.mp3");
   file.play();
   fill(255);
@@ -31,28 +29,29 @@ void setup(){
   background(0);
   textAlign(CENTER);
   textSize(32);
-  String portName="/dev/tty.usbserial-DN01DNHV";
+  
+  /*String portName="/dev/tty.usbserial-DN01DNHV";
   myPort=new Serial (this, portName, 9600);
   myPort.bufferUntil('\n');
-  
+  */
   twinkleArrayOne= new ArrayList<Twinkle>();
   twinkleArrayTwo= new ArrayList<Twinkle>();
   starArrayThree=new ArrayList<ShootingStar>();
   
   for(int i=0; i<100; ++i){
-    int randX=(int)random(0,width);
-    int randY=(int)random(0,height);
+    int randX=(int)random(0,w);
+    int randY=(int)random(0,h);
     Twinkle t= new Twinkle(true, 10,randX, randY,9);
     twinkleArrayOne.add(t);
   }
   for(int i=0; i<50; ++i){
-    int randX=(int)random(0,width);
-    int randY=(int)random(0,height);
+    int randX=(int)random(0,w);
+    int randY=(int)random(0,h);
     Twinkle t= new Twinkle(true, 10,randX, randY,9);
     twinkleArrayTwo.add(t);
   }
   for(int i=0; i<25; ++i){
-    float randX=random(0,width-200);
+    float randX=random(0,w-200);
     float randFrame=random(10,200);
     ShootingStar s=new ShootingStar(i*30+randX, i*10+80, 5,10,5,randFrame);
     starArrayThree.add(s);
@@ -63,15 +62,12 @@ void draw(){
   background(0);
   int addStars=(int) random(1,10);
   if(addStars==10){
-    int randX=(int)random(0,width);
-    int randY=(int)random(0,height);
+    int randX=(int)random(0,w);
+    int randY=(int)random(0,h);
     Twinkle t= new Twinkle(true, 10,randX, randY,9);
     twinkleArrayOne.add(t);
   }
-  //if(led4==true){
-    //if(moon<300){
-    //  moon++;
-    //}
+  if(led4==true){//code to show moon
     fill(255);
     ellipse(moon+20,moon,300,300);
     fill(0);
@@ -82,13 +78,13 @@ void draw(){
     arc(360,330,35,30,0,PI);
     
     
-    if(count5<100){
+    if(count5<400){
       fill(255);
-      text("Good Night Moon",width/2,height/2);
+      text("Good Night Moon",w/2,h/4);
       count5++;
     }
-  //}
-  if(mess==2.0){
+  }
+  //code for the twinkly stars
     for(int i=0; i<twinkleArrayOne.size();i++){
       Twinkle t=twinkleArrayOne.get(i);
       int twinkle=(int)random(1,20);
@@ -108,11 +104,10 @@ void draw(){
       }
     }
     if(count2<100){
-      text("Good Night Stars",width/2,height/4);
+      text("Good Night Stars",w/2,h/4);
       count2++;
     }
-  }
-  if(mess==3.0){
+  
     for(int i=0; i<twinkleArrayTwo.size();i++){
       Twinkle t=twinkleArrayTwo.get(i);
       int twinkle=(int)random(1,20);
@@ -131,14 +126,14 @@ void draw(){
         t.display();
       }
     }
-  }
+  //code for shooting stars
   if(led3==true){
     for(int i=0; i<starArrayThree.size(); i++){
       ShootingStar s=starArrayThree.get(i);
       s.starDraw();
     }
-    if(count1<100){
-      text("Good Night Shooting Stars",width/2,height*3/4);
+    if(count1<300){
+      text("Good Night Shooting Stars",w/2,h*3/4);
       count1++;
     }
   } 
@@ -148,11 +143,7 @@ void serialEvent(Serial myPort){
   println(message);
   mess=float(message);
   println(mess);
-  if(mess==2.0){
-    led1=true;
-  }else if(mess==3.0){
-    led2=true;
-  }else if(mess==4.0){
+  if(mess==4.0){
     led3=true;
   }else if(mess==5.0){
     led4=true;
