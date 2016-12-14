@@ -30,10 +30,10 @@ void setup(){
   textAlign(CENTER);
   textSize(32);
   
-  /*String portName="/dev/tty.usbserial-DN01DNHV";
+  String portName="/dev/tty.usbserial-DN01DNHV";
   myPort=new Serial (this, portName, 9600);
   myPort.bufferUntil('\n');
-  */
+  
   twinkleArrayOne= new ArrayList<Twinkle>();
   twinkleArrayTwo= new ArrayList<Twinkle>();
   starArrayThree=new ArrayList<ShootingStar>();
@@ -67,7 +67,7 @@ void draw(){
     Twinkle t= new Twinkle(true, 10,randX, randY,9);
     twinkleArrayOne.add(t);
   }
-  if(led4==true){//code to show moon
+  if(led4==true){                   //code to show moon
     fill(255);
     ellipse(moon+20,moon,300,300);
     fill(0);
@@ -84,7 +84,7 @@ void draw(){
       count5++;
     }
   }
-  //code for the twinkly stars
+                                                 //code for the twinkly stars
     for(int i=0; i<twinkleArrayOne.size();i++){
       Twinkle t=twinkleArrayOne.get(i);
       int twinkle=(int)random(1,20);
@@ -126,7 +126,7 @@ void draw(){
         t.display();
       }
     }
-  //code for shooting stars
+                                                //code for shooting stars
   if(led3==true){
     for(int i=0; i<starArrayThree.size(); i++){
       ShootingStar s=starArrayThree.get(i);
@@ -150,7 +150,7 @@ void serialEvent(Serial myPort){
   }
   
 }
-class Twinkle{
+class Twinkle{                        //class for twinkling white stars
   int width1;
   boolean twinkleOn;
   int x;
@@ -184,7 +184,7 @@ class Twinkle{
     noStroke();
   }
 }
-class ShootingStar{
+class ShootingStar{                         class for shooting stars
   float thisX;
   float thisY;
   float radiusOne;
